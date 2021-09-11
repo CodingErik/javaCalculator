@@ -14,15 +14,27 @@ public class Main {
 
     public static void main(String[] args) {
 
+        System.out.println();
+
         int principal = (int) readNumber("Principal: ", 1000, 1_000_000);
         float annualInterest = (float) readNumber("Annual Interest rate: ", 1, 30);
-        int years = (byte) readNumber("Period (Years): ", 1, 30);
+        byte years = (byte) readNumber("Period (Years): ", 1, 30);
 
 
         double mortgage = calculateMortage(principal, annualInterest, years);
-
         String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
+        System.out.println();
+        System.out.println("MORTGAGE");
+        System.out.println("--------");
         System.out.println("Mortgage: " + mortgageFormatted);
+
+        System.out.println();
+        System.out.println("PAYMENT SCHEDULE");
+        System.out.println("----------------");
+        for (short month = 1; month < years * MONTHS_IN_YEAR; month++){
+            double balance = calculateBalance(principal, annualInterest, years, month);
+            System.out.println(NumberFormat.getCurrencyInstance().format(balance));
+        }
     }
 
     /**
@@ -50,7 +62,7 @@ public class Main {
         short numberOfPayments = (short) (years * MONTHS_IN_YEAR);
 
         double balance = principal
-                * (Math.pow(1 + monthlyInterest, numberOfPayments) - Math.pow(1 + monthlyInterest, numberOfPayments))
+                * (Math.pow(1 + monthlyInterest, numberOfPayments) - Math.pow(1 + monthlyInterest, numberOfPaymentsMade))
                 / (Math.pow(1 + monthlyInterest, numberOfPayments) - 1);
 
         return balance;
