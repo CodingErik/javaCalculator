@@ -21,13 +21,28 @@ public class Main {
         byte years = (byte) readNumber("Period (Years): ", 1, 30);
 
 
+        /** when refactoring we look for
+         *
+         * - repetitive lines in the code
+         * - and lines that are highly related
+         *
+         * */
+
+        printMortage(principal, annualInterest, years);
+
+        printPaymentSchedule(principal, annualInterest, years);
+    }
+
+    private static void printMortage(int principal, float annualInterest, byte years) {
         double mortgage = calculateMortage(principal, annualInterest, years);
         String mortgageFormatted = NumberFormat.getCurrencyInstance().format(mortgage);
         System.out.println();
         System.out.println("MORTGAGE");
         System.out.println("--------");
         System.out.println("Mortgage: " + mortgageFormatted);
+    }
 
+    private static void printPaymentSchedule(int principal, float annualInterest, byte years) {
         System.out.println();
         System.out.println("PAYMENT SCHEDULE");
         System.out.println("----------------");
